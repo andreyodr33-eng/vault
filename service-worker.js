@@ -1,11 +1,10 @@
 const CACHE_NAME = "cardvault-v1";
 
 const urlsToCache = [
-  "/vault/",
-  "/vault/index.html",
-  "/vault/manifest.json",
-  "/vault/icon-192.png",
-  "/vault/icon-512.png",
+  "index.html",
+  "manifest.json",
+  "icon-192.png",
+  "icon-512.png",
   "https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
 ];
 
