@@ -250,5 +250,12 @@ if (document.referrer !== "" && document.referrer !== window.location.href) {
 }
 
 </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/vault/service-worker.js")
+    .then(() => console.log("Service Worker registered"));
+}
+</script>
 </body>
 </html>
+
