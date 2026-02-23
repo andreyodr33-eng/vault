@@ -1,264 +1,253 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CardVault</title>
+<title>My Business Card</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 <style>
+
+/* ===== ФОН ===== */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f6f9;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
+  background:
+    linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e0e0e0 75%),
+    linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-h1, h2 {
-    text-align: center;
+/* ===== КАРТА ===== */
+.flip-card {
+  background: transparent;
+  width: 320px;
+  height: 180px;
+  perspective: 1000px;
 }
 
-.generator {
-    background: white;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
+.flip-card-inner.flipped {
+  transform: rotateY(180deg);
 }
 
-th, td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  padding: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-tr:hover {
-    background: #f1f1f1;
+.flip-card-front {
+  background: #222;
+  color: #fff;
 }
 
-.actions {
-    margin-top: 15px;
-    text-align: center;
+.flip-card-back {
+  background: #222;
+  color: #fff;
+  transform: rotateY(180deg);
+  text-align: center;
+}
+
+   .flip-card-front *,
+   .flip-card-back * {
+      margin: 0;
+      padding: 0;
+      line-height: 1.85;
+  }
+
+/* ===== КНОПКИ ===== */
+.buttons {
+  margin-top: 20px;
+  text-align: center;
 }
 
 button {
-    padding: 8px 15px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #222;
+  color: white;
 }
 
-.primary {
-    background: #2c7be5;
-    color: white;
+/* ===== QR СТРАНИЦА ===== */
+#qrPage, #cardsPage {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: white;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
 }
 
-.danger {
-    background: #e63757;
-    color: white;
+#cardsList {
+  width: 90%;
+  max-width: 400px;
 }
 
-.view {
-    background: #00a854;
-    color: white;
+.card-item {
+  background: #f5f5f5;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.hidden {
-    display: none;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-}
 </style>
 </head>
 
 <body>
 
-<h1>📇 CardVault</h1>
+<!-- ===== ГЛАВНАЯ ===== -->
+<div id="mainPage">
 
-<section class="generator">
-    <h2>Генератор QR визитницы</h2>
-    <input type="number" id="cardNumber" min="1" max="1000" placeholder="Номер визитки (1-1000)">
-    <button class="primary" onclick="generateQR()">Сгенерировать</button>
-    <div id="qrcode"></div>
-</section>
+<div class="flip-card">
+  <div class="flip-card-inner" id="flipCard">
 
-<section>
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th>Ф.И.О</th>
-                <th>Информация</th>
-            </tr>
-        </thead>
-        <tbody id="cardTable"></tbody>
-    </table>
-
-    <div class="actions">
-        <button class="view" onclick="viewSelected()">Просмотреть</button>
-        <button class="danger" onclick="deleteSelected()">Удалить</button>
+ 
+     <!-- Передняя сторона -->
+      <div class="flip-card-front">
+         <h3>ANDRII-Web Developer</h3>
+        <p>Website created by</p>
+        <p>Custom landing pages & finishing</p>
+        <a class="btn phone" href="tel:+380952153191">📞 Call: +380 95 215 3191</a>
+        
     </div>
-</section>
 
-<!-- Модальное окно -->
-<div id="modal" class="modal hidden">
-    <div class="modal-content">
-        <p id="modalText"></p>
-        <div id="modalForm" class="hidden">
-            <input type="text" id="ownerName" placeholder="Ф.И.О">
-            <input type="text" id="ownerInfo" placeholder="Специальность / должность">
-        </div>
-        <div class="modal-buttons">
-            <button class="primary" id="modalConfirm">Да</button>
-            <button class="danger" onclick="closeModal()">Нет</button>
-        </div>
+      <!-- Обратная сторона — твоя реклама -->
+      <div class="flip-card-back">
+        <h2>MONOBANK-VISA</h2>
+        <p>4441 1144 0787 6992</p>
+        <p>UA093220010000026208340026552</p>
     </div>
+
+  </div>
 </div>
 
+<div class="buttons">
+  <button onclick="showQR()">QR</button>
+  <button onclick="showCards()">Визитки</button>
+</div>
+
+</div>
+
+<!-- ===== QR PAGE ===== -->
+<div id="qrPage">
+  <div id="qrcode"></div>
+  <button onclick="goHome()">Назад</button>
+</div>
+
+<!-- ===== CARDS PAGE ===== -->
+<div id="cardsPage">
+  <h2>Сохранённые визитки</h2>
+  <div id="cardsList"></div>
+  <button onclick="goHome()">Назад</button>
+</div>
 
 <script>
-let cards = JSON.parse(localStorage.getItem("cards")) || [];
-let currentCardId = null;
+// ===== ПЕРЕВОРОТ =====
+const flipCard = document.getElementById('flipCard');
+flipCard.addEventListener('click', () => {
+  flipCard.classList.toggle('flipped');
+});
 
-function saveStorage() {
-    localStorage.setItem("cards", JSON.stringify(cards));
+// ===== QR =====
+function showQR() {
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("qrPage").style.display = "flex";
+
+  document.getElementById("qrcode").innerHTML = "";
+
+  new QRCode(document.getElementById("qrcode"), {
+    text: window.location.origin + window.location.pathname,
+    width: 250,
+    height: 250
+  });
 }
 
-function render() {
-    const table = document.getElementById("cardTable");
-    table.innerHTML = "";
+// ===== СОХРАНЕНИЕ ВИЗИТОК =====
+function saveCard(url) {
+  let cards = JSON.parse(localStorage.getItem("savedCards")) || [];
 
-    cards.forEach((card, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td><input type="radio" name="selectedCard" value="${index}"></td>
-            <td>${card.name}</td>
-            <td>${card.info}</td>
-        `;
-        table.appendChild(row);
-    });
+  if (!cards.includes(url)) {
+    cards.push(url);
+    localStorage.setItem("savedCards", JSON.stringify(cards));
+    alert("Визитка сохранена");
+  }
 }
 
-function generateQR() {
-    const number = document.getElementById("cardNumber").value;
-    if (number < 1 || number > 1000) {
-        showModal("Введите номер от 1 до 1000");
-        return;
-    }
+// ===== ПОКАЗ ВИЗИТОК =====
+function showCards() {
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("cardsPage").style.display = "flex";
 
-    const url = `${window.location.origin}${window.location.pathname}?app=visitnica&cardId=${number}`;
-    document.getElementById("qrcode").innerHTML = "";
-    new QRCode(document.getElementById("qrcode"), url);
+  let cards = JSON.parse(localStorage.getItem("savedCards")) || [];
+  const list = document.getElementById("cardsList");
+  list.innerHTML = "";
+
+  cards.forEach(url => {
+    const div = document.createElement("div");
+    div.className = "card-item";
+
+    div.innerHTML = `
+      <a href="${url}" target="_blank">Открыть</a>
+      <button onclick="deleteCard('${url}')">X</button>
+    `;
+
+    list.appendChild(div);
+  });
 }
 
-function checkVisit() {
-    const params = new URLSearchParams(window.location.search);
-    const app = params.get("app");
-    const cardId = params.get("cardId");
-
-    if (app === "visitnica" && cardId) {
-        currentCardId = cardId;
-
-        if (cards.some(c => c.cardId === cardId)) {
-            showModal("Эта визитка уже сохранена.");
-            return;
-        }
-
-        showModal("Сохранить визитницу?", true);
-    }
+function deleteCard(url) {
+  let cards = JSON.parse(localStorage.getItem("savedCards")) || [];
+  cards = cards.filter(c => c !== url);
+  localStorage.setItem("savedCards", JSON.stringify(cards));
+  showCards();
 }
 
-function showModal(text, showForm = false) {
-    document.getElementById("modalText").innerText = text;
-    document.getElementById("modal").classList.remove("hidden");
-
-    const form = document.getElementById("modalForm");
-    const confirmBtn = document.getElementById("modalConfirm");
-
-    if (showForm) {
-        form.classList.remove("hidden");
-        confirmBtn.onclick = saveCard;
-    } else {
-        form.classList.add("hidden");
-        confirmBtn.onclick = closeModal;
-    }
+function goHome() {
+  document.getElementById("qrPage").style.display = "none";
+  document.getElementById("cardsPage").style.display = "none";
+  document.getElementById("mainPage").style.display = "block";
 }
 
-function closeModal() {
-    document.getElementById("modal").classList.add("hidden");
+// ===== ЕСЛИ ПЕРЕШЛИ ПО QR =====
+if (document.referrer !== "" && document.referrer !== window.location.href) {
+  if (confirm("Сохранить эту визитку?")) {
+    saveCard(window.location.href);
+  }
 }
-
-function saveCard() {
-    const name = document.getElementById("ownerName").value;
-    const info = document.getElementById("ownerInfo").value;
-
-    if (!name || !info) {
-        showModal("Заполните все поля", true);
-        return;
-    }
-
-    cards.push({
-        cardId: currentCardId,
-        name,
-        info,
-        url: window.location.href
-    });
-
-    saveStorage();
-    render();
-    closeModal();
-}
-
-function viewSelected() {
-    const selected = document.querySelector("input[name='selectedCard']:checked");
-    if (!selected) {
-        showModal("Выберите визитку");
-        return;
-    }
-    window.open(cards[selected.value].url, "_blank");
-}
-
-function deleteSelected() {
-    const selected = document.querySelector("input[name='selectedCard']:checked");
-    if (!selected) {
-        showModal("Выберите визитку");
-        return;
-    }
-
-    cards.splice(selected.value, 1);
-    saveStorage();
-    render();
-}
-
-checkVisit();
-render();
 
 </script>
 </body>
