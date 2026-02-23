@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CardVault</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.generator {
+    background: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background: #f1f1f1;
+}
+
+.actions {
+    margin-top: 15px;
+    text-align: center;
+}
+
+button {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.primary {
+    background: #2c7be5;
+    color: white;
+}
+
+.danger {
+    background: #e63757;
+    color: white;
+}
+
+.view {
+    background: #00a854;
+    color: white;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    width: 300px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📇 CardVault</h1>
+
+<section class="generator">
+    <h2>Генератор QR визитницы</h2>
+    <input type="number" id="cardNumber" min="1" max="1000" placeholder="Номер визитки (1-1000)">
+    <button class="primary" onclick="generateQR()">Сгенерировать</button>
+    <div id="qrcode"></div>
+</section>
+
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Ф.И.О</th>
+                <th>Информация</th>
+            </tr>
+        </thead>
+        <tbody id="cardTable"></tbody>
+    </table>
+
+    <div class="actions">
+        <button class="view" onclick="viewSelected()">Просмотреть</button>
+        <button class="danger" onclick="deleteSelected()">Удалить</button>
+    </div>
+</section>
+
+<!-- Модальное окно -->
+<div id="modal" class="modal hidden">
+    <div class="modal-content">
+        <p id="modalText"></p>
+        <div id="modalForm" class="hidden">
+            <input type="text" id="ownerName" placeholder="Ф.И.О">
+            <input type="text" id="ownerInfo" placeholder="Специальность / должность">
+        </div>
+        <div class="modal-buttons">
+            <button class="primary" id="modalConfirm">Да</button>
+            <button class="danger" onclick="closeModal()">Нет</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+let cards = JSON.parse(localStorage.getItem("cards")) || [];
+let currentCardId = null;
+
+function saveStorage() {
+    localStorage.setItem("cards", JSON.stringify(cards));
+}
+
+function render() {
+    const table = document.getElementById("cardTable");
+    table.innerHTML = "";
+
+    cards.forEach((card, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><input type="radio" name="selectedCard" value="${index}"></td>
+            <td>${card.name}</td>
+            <td>${card.info}</td>
+        `;
+        table.appendChild(row);
+    });
+}
+
+function generateQR() {
+    const number = document.getElementById("cardNumber").value;
+    if (number < 1 || number > 1000) {
+        showModal("Введите номер от 1 до 1000");
+        return;
+    }
+
+    const url = `${window.location.origin}${window.location.pathname}?app=visitnica&cardId=${number}`;
+    document.getElementById("qrcode").innerHTML = "";
+    new QRCode(document.getElementById("qrcode"), url);
+}
+
+function checkVisit() {
+    const params = new URLSearchParams(window.location.search);
+    const app = params.get("app");
+    const cardId = params.get("cardId");
+
+    if (app === "visitnica" && cardId) {
+        currentCardId = cardId;
+
+        if (cards.some(c => c.cardId === cardId)) {
+            showModal("Эта визитка уже сохранена.");
+            return;
+        }
+
+        showModal("Сохранить визитницу?", true);
+    }
+}
+
+function showModal(text, showForm = false) {
+    document.getElementById("modalText").innerText = text;
+    document.getElementById("modal").classList.remove("hidden");
+
+    const form = document.getElementById("modalForm");
+    const confirmBtn = document.getElementById("modalConfirm");
+
+    if (showForm) {
+        form.classList.remove("hidden");
+        confirmBtn.onclick = saveCard;
+    } else {
+        form.classList.add("hidden");
+        confirmBtn.onclick = closeModal;
+    }
+}
+
+function closeModal() {
+    document.getElementById("modal").classList.add("hidden");
+}
+
+function saveCard() {
+    const name = document.getElementById("ownerName").value;
+    const info = document.getElementById("ownerInfo").value;
+
+    if (!name || !info) {
+        showModal("Заполните все поля", true);
+        return;
+    }
+
+    cards.push({
+        cardId: currentCardId,
+        name,
+        info,
+        url: window.location.href
+    });
+
+    saveStorage();
+    render();
+    closeModal();
+}
+
+function viewSelected() {
+    const selected = document.querySelector("input[name='selectedCard']:checked");
+    if (!selected) {
+        showModal("Выберите визитку");
+        return;
+    }
+    window.open(cards[selected.value].url, "_blank");
+}
+
+function deleteSelected() {
+    const selected = document.querySelector("input[name='selectedCard']:checked");
+    if (!selected) {
+        showModal("Выберите визитку");
+        return;
+    }
+
+    cards.splice(selected.value, 1);
+    saveStorage();
+    render();
+}
+
+checkVisit();
+render();
+
+</script>
+</body>
+</html>
