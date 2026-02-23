@@ -6,12 +6,7 @@
 <title>My Business Card</title>
 <link rel="manifest" href="/vault/manifest.json">
 <meta name="theme-color" content="#222222">
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/vault/service-worker.js")
-    .then(() => console.log("Service Worker registered"));
-}
-</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <style>
@@ -257,9 +252,15 @@ if (document.referrer !== "" && document.referrer !== window.location.href) {
 }
 
 </script>
-
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/vault/service-worker.js")
+    .then(() => console.log("Service Worker registered"));
+}
+</script>
 </body>
 </html>
+
 
 
 
