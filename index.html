@@ -3,25 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Business Card</title>
+<title>CardVault</title>
 
 <link rel="manifest" href="manifest.json">
  <link rel="icon" href="icon-192.png" type="image/png">
 <meta name="theme-color" content="#222222">
  
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <style>
-
-/* ===== ФОН ===== */
-html, body {
-  height: 100%;
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
-
 body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
   background:
     linear-gradient(45deg, #e0e0e0 25%, transparent 25%),
     linear-gradient(-45deg, #e0e0e0 25%, transparent 25%),
@@ -29,14 +24,9 @@ body {
     linear-gradient(-45deg, transparent 75%, #e0e0e0 75%);
   background-size: 40px 40px;
   background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-/* ===== КАРТА ===== */
 .flip-card {
-  background: transparent;
   width: 320px;
   height: 180px;
   perspective: 1000px;
@@ -48,6 +38,12 @@ body {
   height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.8s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
 }
 
 .flip-card-inner.flipped {
@@ -62,198 +58,95 @@ body {
   border-radius: 12px;
   padding: 15px;
   box-sizing: border-box;
+  background: #222;
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.flip-card-front {
-  background: #222;
-  color: #fff;
+ .flip-card-front *,
+ .flip-card-back * {
+      margin: 0;
+      padding: 0;
+      line-height: 1.85;
 }
 
 .flip-card-back {
-  background: #222;
-  color: #fff;
   transform: rotateY(180deg);
   text-align: center;
 }
 
-   .flip-card-front *,
-   .flip-card-back * {
-      margin: 0;
-      padding: 0;
-      line-height: 1.85;
+a {
+  color: red;
+  text-decoration: none;
+  margin-top: 6px;
+}
+  /*Адаптация под экран телефона*/
+      @media (max-width: 480px) {
+      #consultation-form {
+      padding: 15px;
+      max-width: 90%;
+    }
   }
-
-/* ===== КНОПКИ ===== */
-.buttons {
-  margin-top: 20px;
-  text-align: center;
-}
-
-button {
-  padding: 10px 15px;
-  margin: 5px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #222;
-  color: white;
-}
-
-/* ===== QR СТРАНИЦА ===== */
-#qrPage, #cardsPage {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: white;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-}
-
-#cardsList {
-  width: 90%;
-  max-width: 400px;
-}
-
-.card-item {
-  background: #f5f5f5;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 6px;
-  display: flex;
-  justify-content: space-between;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- ===== ГЛАВНАЯ ===== -->
-<div id="mainPage">
-
 <div class="flip-card">
   <div class="flip-card-inner" id="flipCard">
 
- 
-     <!-- Передняя сторона -->
-      <div class="flip-card-front">
-         <h3>ANDRII-Web Developer</h3>
-        <p>Website created by</p>
-        <p>Custom landing pages & finishing</p>
-        <a class="btn phone" href="tel:+380952153191">📞 Call: +380 95 215 3191</a>
-        
+    <!-- Передняя сторона -->
+    <div class="flip-card-front">
+      <h3>ANDRII - Web Developer</h3>
+      <p>Website created by</p>
+      <p>Custom landing pages</p>
+      <a href="tel:+380952153191">📞 +380 95 215 3191</a>
+     
     </div>
+     
 
-      <!-- Обратная сторона — твоя реклама -->
-      <div class="flip-card-back">
-        <h2>MONOBANK-VISA</h2>
-        <p>4441 1144 0787 6992</p>
-        <p>UA093220010000026208340026552</p>
+    <!-- Задняя сторона -->
+    <div class="flip-card-back">
+      <h2>MONOBANK-VISA</h2>
+      <p>4441 1144 0787 6992</p>
+      <p>UA093220010000026208340026552</p>
+      <p>
+        <!-- КНОПКА ПОДЕЛИТЬСЯ -->
+      <a href="javascript:void(0)" onclick="shareCard()">📤 Поделиться</a>
+        
+      </p>
+   
     </div>
 
   </div>
 </div>
 
-<div class="buttons">
-  <button onclick="showQR()">QR</button>
-  <button onclick="showCards()">Визитки</button>
-</div>
-
-</div>
-
-<!-- ===== QR PAGE ===== -->
-<div id="qrPage">
-  <div id="qrcode"></div>
-  <button onclick="goHome()">Назад</button>
-</div>
-
-<!-- ===== CARDS PAGE ===== -->
-<div id="cardsPage">
-  <h2>Сохранённые визитки</h2>
-  <div id="cardsList"></div>
-  <button onclick="goHome()">Назад</button>
-</div>
-
 <script>
-// ===== ПЕРЕВОРОТ =====
+// Переворот на телефоне
 const flipCard = document.getElementById('flipCard');
-flipCard.addEventListener('click', () => {
-  flipCard.classList.toggle('flipped');
-});
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-// ===== QR =====
-function showQR() {
-  document.getElementById("mainPage").style.display = "none";
-  document.getElementById("qrPage").style.display = "flex";
-
-  document.getElementById("qrcode").innerHTML = "";
-
-  new QRCode(document.getElementById("qrcode"), {
-    text: window.location.origin + window.location.pathname,
-    width: 250,
-    height: 250
+if (isTouchDevice) {
+  flipCard.addEventListener('click', () => {
+    flipCard.classList.toggle('flipped');
   });
 }
 
-// ===== СОХРАНЕНИЕ ВИЗИТОК =====
-function saveCard(url) {
-  let cards = JSON.parse(localStorage.getItem("savedCards")) || [];
-
-  if (!cards.includes(url)) {
-    cards.push(url);
-    localStorage.setItem("savedCards", JSON.stringify(cards));
-    alert("Визитка сохранена");
+// Web Share API
+function shareCard() {
+  if (navigator.share) {
+    navigator.share({
+      title: "Andrii - Web Developer",
+      text: "Моя цифровая визитка:",
+      url: window.location.href
+    });
+  } else {
+    alert("Функция поделиться не поддерживается этим браузером");
   }
 }
-
-// ===== ПОКАЗ ВИЗИТОК =====
-function showCards() {
-  document.getElementById("mainPage").style.display = "none";
-  document.getElementById("cardsPage").style.display = "flex";
-
-  let cards = JSON.parse(localStorage.getItem("savedCards")) || [];
-  const list = document.getElementById("cardsList");
-  list.innerHTML = "";
-
-  cards.forEach(url => {
-    const div = document.createElement("div");
-    div.className = "card-item";
-
-    div.innerHTML = `
-      <a href="${url}" target="_blank">Открыть</a>
-      <button onclick="deleteCard('${url}')">X</button>
-    `;
-
-    list.appendChild(div);
-  });
-}
-
-function deleteCard(url) {
-  let cards = JSON.parse(localStorage.getItem("savedCards")) || [];
-  cards = cards.filter(c => c !== url);
-  localStorage.setItem("savedCards", JSON.stringify(cards));
-  showCards();
-}
-
-function goHome() {
-  document.getElementById("qrPage").style.display = "none";
-  document.getElementById("cardsPage").style.display = "none";
-  document.getElementById("mainPage").style.display = "block";
-}
-
-// ===== ЕСЛИ ПЕРЕШЛИ ПО QR =====
-if (document.referrer !== "" && document.referrer !== window.location.href) {
-  if (confirm("Сохранить эту визитку?")) {
-    saveCard(window.location.href);
-  }
-}
-
 </script>
 <script>
 if ("serviceWorker" in navigator) {
@@ -261,8 +154,10 @@ if ("serviceWorker" in navigator) {
     .then(() => console.log("Service Worker registered"));
 }
 </script>
+
 </body>
 </html>
+
 
 
 
