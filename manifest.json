@@ -34,10 +34,16 @@
      "sizes": "1366x768",
      "type": "image/png",
      "form_factor": "wide"
+    },
+    {
+     "src": "screenshot-mobile.png",
+     "sizes": "750x1334",
+     "type": "image/png"
     }
   ]
 }
     
+
 
 
 
