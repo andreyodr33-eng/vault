@@ -130,11 +130,13 @@ a {
 <script>
 // Переворот на телефоне
 const flipCard = document.getElementById('flipCard');
+const flipInner = flipCard.querySelector('.flip-card-inner');
+ 
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
 if (isTouchDevice) {
   flipCard.addEventListener('click', () => {
-    flipCard.classList.toggle('flipped');
+    flipInner.classList.toggle('flipped');
   });
 }
 
@@ -160,6 +162,7 @@ if ("serviceWorker" in navigator) {
 
 </body>
 </html>
+
 
 
 
