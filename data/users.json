@@ -1,1 +1,30 @@
+{
+  "andrew": {
+    "name": "Andrew - Web Developer",
+    "position": "Website created by",
+    "company": "Custom landing pages",
+    "phone": "+380952153191",
+    "color": "#222222",
+    "icon": "icons/andrew-icon.png",
+    "qr": ""  // QR-код пока нет, оставляем пустым
+  },
 
+  "ivanov": {
+    "name": "Иван Иванов",
+    "position": "Loadmaster",
+    "company": "GUINNESS",
+    "phone": "+353874919018",
+    "color": "#222222",
+    "icon": "icons/ivanov-icon.png",
+    "qr": "icons/ivanov-qr.png"
+  },
+  "petrov": {
+    "name": "Петр Петров",
+    "position": "Developer",
+    "company": "TechCorp",
+    "phone": "+380111111111",
+    "color": "#444444",
+    "icon": "icons/petrov-icon.png",
+    "qr": "icons/petrov-qr.png"
+  }
+}
