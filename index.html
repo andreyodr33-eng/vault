@@ -156,12 +156,9 @@ fetch("data/users.json")
   .then(res => res.json())
   .then(users => {
     const user = users[userKey];
-    if (!user) {
-      console.log("USER NOT FOUND:", userKey);
-      return;
-    }
-
-    // Передняя сторона
+    if (!user)  return;
+    
+  // Передняя сторона
     document.getElementById("front-name").textContent = user.name;
     document.getElementById("front-position").textContent = user.position;
     document.getElementById("front-company").textContent = user.company;
@@ -232,6 +229,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
