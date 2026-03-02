@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+ <!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="format-detection" content="telephone=no">
-<title>CardVault</title>
+<meta name="format-detection" content="telephone=no">
+<title id="page-title">CardVault</title>
 
-<link rel="manifest" href="manifest.json">
- <link rel="icon" href="icon-192.png" type="image/png">
-<meta name="theme-color" content="#222222">
- 
+<!-- динамический manifest -->
+<link id="manifest-link" rel="manifest">
+<link rel="icon" id="favicon" href="icons/default.png" type="image/png">
+<meta name="theme-color" id="theme-color" content="#222222">
+
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -78,14 +79,45 @@ body {
 
 .flip-card-back {
   transform: rotateY(180deg);
-  text-align: center;
+  text-align: left;
+  position: relative;
+  padding: 15px;
+  display: block;
 }
+.flip-card-back h3 {
+   position: absolute;
+   top: 15px;
+   left: 15px;
+   margin: 0;
+ }
+.flip-card-back .qr-code {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   margin: 0;
+ }
+ .flip-card-back p {
+   position: absolute;
+   bottom: 15px;
+   right: 15px;
+   margin: 0;
+ }
 
 a {
   color: red;
   text-decoration: none;
   margin-top: 6px;
 }
+
+.qr-code {
+  width: 100px;
+  height: 100px;
+  max-width: 80%;
+  object-fit: contain;
+  border-radius: 8px;
+  margin: 10px 0;
+ }
   /*Адаптация под экран телефона*/
       @media (max-width: 480px) {
       #consultation-form {
@@ -95,41 +127,79 @@ a {
   }
 </style>
 </head>
-
 <body>
-
- <div class="flip-card" id="flipCard">
-    <div class="flip-card-inner">
+<div class="flip-card" id="flipCard">
+  <div class="flip-card-inner">
     <!-- Передняя сторона -->
     <div class="flip-card-front">
-      <h3>ANDREW - Web Developer</h3>
-      <p>Website created by</p>
-      <p>Custom landing pages</p>
-      <a href="tel:+353874919018">📞 +353 87 491 9018</a>
-  </div>
-     <!-- Задняя сторона -->
-    <div class="flip-card-back">
-      <h2>MONOBANK-VISA</h2>
-      <p>4441 1144 0787 6992</p>
-      <p>UA093220010000026208340026552</p>
-      <p>
-        <!-- КНОПКА ПОДЕЛИТЬСЯ -->
-      <a href="javascript:void(0)" onclick="shareCard()">📤 share</a>
-        
-      </p>
-   
+      <h3 id="front-name">Name</h3>
+      <p id="front-position">Position</p>
+      <p id="front-company">Company</p>
+      <a id="front-phone" href="tel:+000000000">📞 Phone</a>
     </div>
-
+    <!-- Задняя сторона -->
+    <div class="flip-card-back">
+      <h3 id="back-name">Company</h3>
+      <img src="" alt="QR Code" class="qr-code" id="qr-code">
+      <p><a href="javascript:void(0)" onclick="shareCard()">📤 share</a></p>
+    </div>
   </div>
 </div>
 
 <script>
-// Переворот на телефоне
+// Определяем пользователя из пути URL
+// Например: https://site.github.io/ivanov -> "ivanov"
+const userKey = window.location.pathname.replace("/", "") || "ivanov";
+
+// Загружаем данные всех визиток
+fetch("data/users.json")
+  .then(res => res.json())
+  .then(users => {
+    const user = users[userKey];
+    if (!user) return;
+
+    // Передняя сторона
+    document.getElementById("front-name").textContent = user.name;
+    document.getElementById("front-position").textContent = user.position;
+    document.getElementById("front-company").textContent = user.company;
+    const phoneLink = document.getElementById("front-phone");
+    phoneLink.textContent = "📞 " + user.phone;
+    phoneLink.href = "tel:" + user.phone;
+
+    // Задняя сторона
+    document.getElementById("back-name").textContent = user.company;
+    document.getElementById("qr-code").src = user.qr;
+
+    // Цвет темы
+    document.getElementById("theme-color").content = user.color;
+    document.body.style.background = user.color;
+
+    // Динамический manifest
+    generateManifest(user);
+  });
+
+// Создаём manifest динамически
+function generateManifest(user) {
+  const manifest = {
+    name: user.name,
+    short_name: user.name,
+    start_url: "/" + userKey,
+    display: "standalone",
+    background_color: user.color,
+    theme_color: user.color,
+    icons: [
+      { src: user.icon, sizes: "192x192", type: "image/png" }
+    ]
+  };
+
+  const blob = new Blob([JSON.stringify(manifest)], {type: "application/json"});
+  document.getElementById("manifest-link").href = URL.createObjectURL(blob);
+}
+
+// Переворот для touch-устройств
 const flipCard = document.getElementById('flipCard');
 const flipInner = flipCard.querySelector('.flip-card-inner');
- 
 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
 if (isTouchDevice) {
   flipCard.addEventListener('click', () => {
     flipInner.classList.toggle('flipped');
@@ -140,7 +210,7 @@ if (isTouchDevice) {
 function shareCard() {
   if (navigator.share) {
     navigator.share({
-      title: "Andrii - Web Developer",
+      title: document.getElementById("front-name").textContent,
       text: "Моя цифровая визитка:",
       url: window.location.href
     });
@@ -149,15 +219,17 @@ function shareCard() {
   }
 }
 </script>
+
 <script>
+// Service Worker
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/vault/service-worker.js")
+  navigator.serviceWorker.register("/service-worker.js")
     .then(() => console.log("Service Worker registered"));
 }
 </script>
-
 </body>
 </html>
+
 
 
 
