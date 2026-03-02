@@ -1,11 +1,9 @@
 const CACHE_NAME = "cards-v1";
-
-
 const urlsToCache = [
-  "/",               // главный файл
-  "/index.html",     // HTML
-  "/app.js",         // скрипт для визиток
-  "/data/users.json" // данные визиток
+  "/vault/",               // главный файл
+  "/vault/index.html",     // HTML
+  "/vault/app.js",         // скрипт для визиток
+  "/vault/data/users.json" // данные визиток
   // сюда можно добавить другие CSS, иконки и изображения
 ];
 
@@ -38,4 +36,5 @@ self.addEventListener("fetch", event => {
       .then(response => response || fetch(event.request))
   );
 });
+
 
