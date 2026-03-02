@@ -147,77 +147,61 @@ a {
 </div>
 
 <script>
-// Определяем пользователя из пути URL
-// Например: https://site.github.io/ivanov -> "ivanov"
-const userKey = window.location.pathname.replace("/", "") || "andrew";
+// app.js
 
-// Загружаем данные всех визиток
+// Получаем параметр ?user
+let userKey = new URLSearchParams(window.location.search).get("user") || "andrew";
+
+// Нормализуем ключ
+userKey = userKey.trim().replace(/\/$/, "").toLowerCase();
+console.log("USER KEY:", userKey);
+
+// Жёсткий путь к JSON (под-папка vault)
 fetch("/vault/data/users.json")
   .then(res => res.json())
   .then(users => {
+    console.log("ALL USERS:", users);
     const user = users[userKey];
-    if (!user)  return;
-    
-  // Передняя сторона
+
+    if (!user) {
+      console.log("USER NOT FOUND:", userKey);
+      return;
+    }
+
+    // Вставка данных на лицевую сторону
     document.getElementById("front-name").textContent = user.name;
     document.getElementById("front-position").textContent = user.position;
     document.getElementById("front-company").textContent = user.company;
+    
     const phoneLink = document.getElementById("front-phone");
     phoneLink.textContent = "📞 " + user.phone;
     phoneLink.href = "tel:" + user.phone;
 
-    // Задняя сторона
-    document.getElementById("back-name").textContent = user.company;
+    // Цвет фона лицевой стороны
+    document.querySelector(".flip-card-front").style.background = user.color || "#222";
+
+    // Иконка (если есть)
+    if (user.icon) {
+      const iconEl = document.createElement("img");
+      iconEl.src = user.icon;
+      iconEl.alt = user.name;
+      iconEl.style.width = "40px";
+      iconEl.style.height = "40px";
+      iconEl.style.borderRadius = "50%";
+      document.querySelector(".flip-card-front").prepend(iconEl);
+    }
+
+    // Обратная сторона
+    document.getElementById("back-bank").textContent = user.company;
+    document.getElementById("back-card").textContent = user.phone; // пример, можно расширить
     document.getElementById("qr-code").src = user.qr;
 
-    // Цвет темы
-    document.getElementById("theme-color").content = user.color;
-    document.body.style.background = user.color;
-
-    // Динамический manifest
-    generateManifest(user);
-  });
-
-// Создаём manifest динамически
-function generateManifest(user) {
-  const manifest = {
-    name: user.name,
-    short_name: user.name,
-    start_url: "/" + userKey,
-    display: "standalone",
-    background_color: user.color,
-    theme_color: user.color,
-    icons: [
-      { src: user.icon, sizes: "192x192", type: "image/png" }
-    ]
-  };
-
-  const blob = new Blob([JSON.stringify(manifest)], {type: "application/json"});
-  document.getElementById("manifest-link").href = URL.createObjectURL(blob);
-}
-
-// Переворот для touch-устройств
-const flipCard = document.getElementById('flipCard');
-const flipInner = flipCard.querySelector('.flip-card-inner');
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-if (isTouchDevice) {
-  flipCard.addEventListener('click', () => {
-    flipInner.classList.toggle('flipped');
-  });
-}
-
-// Web Share API
-function shareCard() {
-  if (navigator.share) {
-    navigator.share({
-      title: document.getElementById("front-name").textContent,
-      text: "Моя цифровая визитка:",
-      url: window.location.href
-    });
-  } else {
-    alert("Функция поделиться не поддерживается этим браузером");
-  }
-}
+    // Цвет фона обратной стороны
+    document.querySelector(".flip-card-back").style.background = user.color || "#222";
+  })
+  .catch(err => console.error("Failed to load users.json:", err));
+    
+ 
 </script>
 
 <script>
@@ -229,6 +213,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
