@@ -156,7 +156,10 @@ fetch("data/users.json")
   .then(res => res.json())
   .then(users => {
     const user = users[userKey];
-    if (!user) return;
+    if (!user) {
+      console.log("USER NOT FOUND:", userKey);
+      return;
+    }
 
     // Передняя сторона
     document.getElementById("front-name").textContent = user.name;
@@ -229,6 +232,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
