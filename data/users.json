@@ -6,7 +6,7 @@
     "phone": "+380952153191",
     "color": "#222222",
     "icon": "icons/andrew-icon.png",
-    "qr": ""  // QR-код пока нет, оставляем пустым
+    "qr": "icons/andrew-qr.png" 
   },
 
   "ivanov": {
