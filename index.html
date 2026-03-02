@@ -147,6 +147,7 @@ a {
 </div>
 
 <script>
+ document.addEventListener("DOMContentLoaded", function() {
 // app.js
 
 // Получаем параметр ?user
@@ -201,7 +202,7 @@ fetch("/vault/data/users.json")
   })
   .catch(err => console.error("Failed to load users.json:", err));
     
- 
+ });
 </script>
 
 <script>
@@ -213,6 +214,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
