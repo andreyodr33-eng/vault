@@ -152,7 +152,7 @@ a {
 const userKey = window.location.pathname.replace("/", "") || "andrew";
 
 // Загружаем данные всех визиток
-fetch(new URL("data/users.json", window.location.href))
+fetch("/vault/data/users.json")
   .then(res => res.json())
   .then(users => {
     const user = users[userKey];
@@ -229,6 +229,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
