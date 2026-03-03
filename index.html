@@ -183,7 +183,8 @@ fetch("/vault/data/users.json")
     document.querySelector(".flip-card-back").style.background = user.color || "#222";
 
     // ===== QR код =====
-    const qrImg = document.getElementById("qr-code");
+    const qrImg = document.getElementById("qr-code"); 
+    qrImg.src = user.qr.startsWith("icons/") ? "/vault/" + user.qr : user.qr;
     if (user.qr && user.qr.trim() !== "") {
       qrImg.src = user.qr;
       qrImg.style.display = "block";
@@ -206,6 +207,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
