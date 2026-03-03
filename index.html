@@ -147,7 +147,7 @@ a {
 </div>
 
 <script>
- 
+
 document.addEventListener("DOMContentLoaded", function() {
 
 let userKey = new URLSearchParams(window.location.search).get("user") || "andrew";
@@ -165,7 +165,7 @@ fetch("/vault/data/users.json")
       return;
     }
 
-    // Лицевая сторона
+    // ===== Лицевая сторона =====
     document.getElementById("front-name").textContent = user.name;
     document.getElementById("front-position").textContent = user.position;
     document.getElementById("front-company").textContent = user.company;
@@ -175,17 +175,22 @@ fetch("/vault/data/users.json")
     phoneLink.href = "tel:" + user.phone;
 
     document.querySelector(".flip-card-front").style.background = user.color || "#222";
+
+
+    // ===== Обратная сторона =====
+    document.getElementById("back-name").textContent = user.company;
     document.querySelector(".flip-card-back").style.background = user.color || "#222";
 
-    // QR
+    // ===== QR код =====
     const qrImg = document.getElementById("qr-code");
     if (user.qr) {
       qrImg.src = user.qr;
+      qrImg.style.display = "block";
     } else {
       qrImg.style.display = "none";
     }
 
-    // Иконка (если есть)
+    // ===== ИКОНКА НА ОБРАТНОЙ СТОРОНЕ =====
     if (user.icon) {
       const iconEl = document.createElement("img");
       iconEl.src = user.icon;
@@ -195,6 +200,7 @@ fetch("/vault/data/users.json")
       iconEl.style.borderRadius = "50%";
       iconEl.style.marginBottom = "10px";
 
+      // Вставляем в начало обратной стороны
       document.querySelector(".flip-card-back").prepend(iconEl);
     }
 
@@ -203,6 +209,9 @@ fetch("/vault/data/users.json")
 
 });
 </script>
+      
+
+    
 
  
     
@@ -216,6 +225,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
