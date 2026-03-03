@@ -190,34 +190,12 @@ fetch("/vault/data/users.json")
     } else {
       qrImg.style.display = "none";
     }
-
-    // ===== ИКОНКА НА ОБРАТНОЙ СТОРОНЕ =====
-    if (user.icon) {
-      const iconEl = document.createElement("img");
-      iconEl.src = user.icon;
-      iconEl.alt = user.name;
-      iconEl.style.width = "40px";
-      iconEl.style.height = "40px";
-      iconEl.style.borderRadius = "50%";
-      iconEl.style.marginBottom = "10px";
-
-      // Вставляем в начало обратной стороны
-      document.querySelector(".flip-card-back").prepend(iconEl);
-    }
-
   })
   .catch(err => console.error("Failed to load users.json:", err));
 
 });
 </script>
     
-      
-
-    
-
- 
-    
-
 <script>
 // Service Worker
 if ("serviceWorker" in navigator) {
@@ -227,6 +205,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
