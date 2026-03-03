@@ -139,7 +139,7 @@ a {
     </div>
     <!-- Задняя сторона -->
     <div class="flip-card-back">
-      <h3 id="back-bank">Company</h3>
+      <h3 id="back-bank">bank</h3>
       <img src="" alt="QR Code" class="qr-code" id="qr-code">
       <p><a href="javascript:void(0)" onclick="shareCard()">📤 share</a></p>
     </div>
@@ -179,16 +179,17 @@ fetch("/vault/data/users.json")
 
 
     // ===== Обратная сторона =====
-    document.getElementById("back-bank").textContent = user.company;
+    document.getElementById("back-bank").textContent = user.bank;
     document.querySelector(".flip-card-back").style.background = user.color || "#222";
 
     // ===== QR код =====
     const qrImg = document.getElementById("qr-code");
-    if (user.qr) {
+    if (user.qr && user.qr.trim() !== "") {
       qrImg.src = user.qr;
       qrImg.style.display = "block";
     } else {
-      qrImg.style.display = "none";
+      qrImg.src = "icons/qr-placeholder.png"; // если нет QR
+      qrImg.style.display = "block";
     }
   })
   .catch(err => console.error("Failed to load users.json:", err));
@@ -205,6 +206,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
