@@ -205,8 +205,23 @@ if ("serviceWorker" in navigator) {
     .then(() => console.log("Service Worker registered"));
 }
 </script>
+ <script>
+function shareCard() {
+  if (navigator.share) {
+    navigator.share({
+      title: "My digital card",
+      text: "Check out my digital business card:",
+      url: window.location.href
+    }).then(() => console.log("Shared successfully"))
+      .catch(err => console.log("Share failed:", err));
+  } else {
+    alert("Sharing is not supported in this browser.");
+  }
+}
+</script>
 </body>
 </html>
+
 
 
 
