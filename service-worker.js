@@ -1,43 +1,51 @@
 const CACHE_NAME = "cards-v1";
-const urlsToCache = [
-  "/vault/",               // главный файл
-  "/vault/index.html",     // HTML
-  "/vault/app.js",         // скрипт для визиток
-  "/vault/data/users.json" // данные визиток
+const FILES_TO_CACHE = [
+  "/vault/",                     // главная страница
+  "/vault/index.html",           // index
+  "/vault/app.js",               // скрипт
+  "/vault/data/users.json",      // данные пользователей
+  // PWA иконки
   "/vault/icons/icon-192.png",
-  "/vault/icons/icon-512.png"
-  // сюда можно добавить другие CSS, иконки и изображения
+  "/vault/icons/icon-512.png",
+  // QR-коды пользователей
+  "/vault/icons/andrew-qr.png",
+  "/vault/icons/ivanov-qr.png",
+  "/vault/icons/petrov-qr.png"
 ];
 
 // Установка Service Worker и кэширование
 self.addEventListener("install", event => {
+  console.log("[SW] Install event");
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-      .then(() => self.skipWaiting()) // сразу активируем SW
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(FILES_TO_CACHE);
+    })
   );
 });
 
-// Активация Service Worker и очистка старых кэшей
+// Активация Service Worker и удаление старых кешей
 self.addEventListener("activate", event => {
+  console.log("[SW] Activate event");
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE_NAME)
-            .map(key => caches.delete(key))
-      )
-    )
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            console.log("[SW] Removing old cache:", key);
+            return caches.delete(key);
+          }
+        })
+      );
+    })
   );
   self.clients.claim();
 });
 
-// Перехват запросов и отдача из кэша, если есть
+// Перехват запросов и отдача из кеша, если есть
 self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => response || fetch(event.request))
+    caches.match(event.request).then(response => {
+      return response || fetch(event.request);
+    })
   );
 });
-
-
-
