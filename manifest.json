@@ -26,23 +26,12 @@
       "src": "/vault/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
-    }
-  ],
-  "screenshots": [
-    {
-     "src": "/vault/screenshots/screenshots-desktop.png",
-     "sizes": "1366x768",
-     "type": "image/png",
-     "form_factor": "wide"
-    },
-    {
-     "src": "/vault/screenshots/screenshot-mobile.png",
-     "sizes": "750x1334",
-     "type": "image/png"
+    
     }
   ]
 }
     
+
 
 
 
