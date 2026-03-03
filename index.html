@@ -184,16 +184,12 @@ fetch("/vault/data/users.json")
    
 
     // Обратная сторона
-    document.getElementById("back-bank").textContent = user.company;
+    document.getElementById("back-name").textContent = user.company;
     document.getElementById("back-card").textContent = user.phone; // пример, можно расширить
     document.getElementById("qr-code").src = user.qr;
  // Цвет фона обратной стороны
     document.querySelector(".flip-card-back").style.background = user.color || "#222";
-  })
-  .catch(err => console.error("Failed to load users.json:", err));
-    
- });
-  // Иконка (если есть)
+    // Иконка 
     if (user.icon) {
       const iconEl = document.createElement("img");
       iconEl.src = user.icon;
@@ -203,6 +199,11 @@ fetch("/vault/data/users.json")
       iconEl.style.borderRadius = "50%";
       document.querySelector(".flip-card-front").prepend(iconEl);
     }
+  })
+  .catch(err => console.error("Failed to load users.json:", err));
+    
+ });
+ 
 </script>
 
 <script>
@@ -214,6 +215,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
