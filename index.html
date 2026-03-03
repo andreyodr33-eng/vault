@@ -147,49 +147,45 @@ a {
 </div>
 
 <script>
- document.addEventListener("DOMContentLoaded", function() {
-// app.js
+ 
+document.addEventListener("DOMContentLoaded", function() {
 
-// Получаем параметр ?user
 let userKey = new URLSearchParams(window.location.search).get("user") || "andrew";
-
-// Нормализуем ключ
 userKey = userKey.trim().replace(/\/$/, "").toLowerCase();
 console.log("USER KEY:", userKey);
 
-// Жёсткий путь к JSON (под-папка vault)
 fetch("/vault/data/users.json")
   .then(res => res.json())
   .then(users => {
     console.log("ALL USERS:", users);
-    const user = users[userKey];
 
+    const user = users[userKey];
     if (!user) {
       console.log("USER NOT FOUND:", userKey);
       return;
     }
 
-    // Вставка данных на лицевую сторону
+    // Лицевая сторона
     document.getElementById("front-name").textContent = user.name;
     document.getElementById("front-position").textContent = user.position;
-    
-    
+    document.getElementById("front-company").textContent = user.company;
+
     const phoneLink = document.getElementById("front-phone");
     phoneLink.textContent = "📞 " + user.phone;
     phoneLink.href = "tel:" + user.phone;
 
-    // Цвет фона лицевой стороны
     document.querySelector(".flip-card-front").style.background = user.color || "#222";
-
-   
-
-    // Обратная сторона
-    document.getElementById("back-name").textContent = user.company;
-    document.getElementById("back-card").textContent = user.phone; // пример, можно расширить
-    document.getElementById("qr-code").src = user.qr;
- // Цвет фона обратной стороны
     document.querySelector(".flip-card-back").style.background = user.color || "#222";
-    // Иконка 
+
+    // QR
+    const qrImg = document.getElementById("qr-code");
+    if (user.qr) {
+      qrImg.src = user.qr;
+    } else {
+      qrImg.style.display = "none";
+    }
+
+    // Иконка (если есть)
     if (user.icon) {
       const iconEl = document.createElement("img");
       iconEl.src = user.icon;
@@ -197,14 +193,19 @@ fetch("/vault/data/users.json")
       iconEl.style.width = "40px";
       iconEl.style.height = "40px";
       iconEl.style.borderRadius = "50%";
-      document.querySelector(".flip-card-front").prepend(iconEl);
+      iconEl.style.marginBottom = "10px";
+
+      document.querySelector(".flip-card-back").prepend(iconEl);
     }
+
   })
   .catch(err => console.error("Failed to load users.json:", err));
-    
- });
- 
+
+});
 </script>
+
+ 
+    
 
 <script>
 // Service Worker
@@ -215,6 +216,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
