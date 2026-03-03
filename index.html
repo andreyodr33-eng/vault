@@ -140,7 +140,7 @@ a {
     <!-- Задняя сторона -->
     <div class="flip-card-back">
       <h3 id="back-name">Company</h3>
-      <img src="" alt="QR Code" class="qr-code" id="qr-code">
+      
       <p><a href="javascript:void(0)" onclick="shareCard()">📤 share</a></p>
     </div>
   </div>
@@ -172,7 +172,7 @@ fetch("/vault/data/users.json")
     // Вставка данных на лицевую сторону
     document.getElementById("front-name").textContent = user.name;
     document.getElementById("front-position").textContent = user.position;
-    document.getElementById("front-company").textContent = user.company;
+    
     
     const phoneLink = document.getElementById("front-phone");
     phoneLink.textContent = "📞 " + user.phone;
@@ -215,6 +215,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
