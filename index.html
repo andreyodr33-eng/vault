@@ -206,6 +206,18 @@ if ("serviceWorker" in navigator) {
 }
 </script>
  <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const cardInner = document.querySelector(".flip-card-inner");
+
+  document.getElementById("flipCard").addEventListener("click", function(e) {
+    // чтобы клик по ссылке share не переворачивал карту
+    if (e.target.tagName.toLowerCase() === "a") return;
+
+    cardInner.classList.toggle("flipped");
+  });
+});
+</script>
+ <script>
 function shareCard() {
   if (navigator.share) {
     navigator.share({
@@ -221,6 +233,7 @@ function shareCard() {
 </script>
 </body>
 </html>
+
 
 
 
