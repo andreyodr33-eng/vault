@@ -4,6 +4,8 @@ const urlsToCache = [
   "/vault/index.html",     // HTML
   "/vault/app.js",         // скрипт для визиток
   "/vault/data/users.json" // данные визиток
+  "/vault/icons/icon-192.png",
+  "/vault/icons/icon-512.png"
   // сюда можно добавить другие CSS, иконки и изображения
 ];
 
@@ -36,5 +38,6 @@ self.addEventListener("fetch", event => {
       .then(response => response || fetch(event.request))
   );
 });
+
 
 
