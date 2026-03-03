@@ -1,48 +1,49 @@
 {
-  "id":"/vault/index.html",
+  "id":"/vault/",
   "name": "CardVault",
   "short_name": "CVault",
-  "start_url": "index.html",
+  "start_url": "/vault",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#222222",
   "icons": [
     {
-      "src": "icon-32.png",
+      "src": "/vault/icons/icon-32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "icon-180.png",
+      "src": "/vault/icons/icon-180.png",
       "sizes": "180x180",
       "type": "image/png"
     },
     {
-      "src": "icon-192.png",
+      "src": "/vault/icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "/vault/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
   "screenshots": [
     {
-     "src": "screenshots-desktop.png",
+     "src": "/vault/screenshots/screenshots-desktop.png",
      "sizes": "1366x768",
      "type": "image/png",
      "form_factor": "wide"
     },
     {
-     "src": "screenshot-mobile.png",
+     "src": "/vault/screenshots/screenshot-mobile.png",
      "sizes": "750x1334",
      "type": "image/png"
     }
   ]
 }
     
+
 
 
 
