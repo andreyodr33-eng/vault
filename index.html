@@ -201,8 +201,9 @@ fetch("/vault/data/users.json")
 <script>
 // Service Worker
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("https://andreyodr33-eng.github.io/vault/service-worker.js")
+  navigator.serviceWorker.register("/vault/service-worker.js")
     .then(() => console.log("Service Worker registered"));
+    .catch(err => console.error("Service Worker registration failed:", err));
 }
 </script>
  <script>
@@ -233,6 +234,7 @@ function shareCard() {
 </script>
 </body>
 </html>
+
 
 
 
