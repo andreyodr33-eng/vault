@@ -5,6 +5,8 @@ const FILES_TO_CACHE = [
   "/vault/app.js",               // скрипт
   "/vault/data/users.json",      // данные пользователей
   // PWA иконки
+  "/vault/icons/icon-32.png",
+  "/vault/icons/icon-180.png",
   "/vault/icons/icon-192.png",
   "/vault/icons/icon-512.png",
   // QR-коды пользователей
@@ -49,5 +51,6 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
 
 
