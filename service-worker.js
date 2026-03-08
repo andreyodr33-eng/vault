@@ -1,7 +1,7 @@
 const CACHE_NAME = "cards-v1";
 const FILES_TO_CACHE = [
   "/vault/",                    // главная страница
-  "/vault/index.html",           // index
+                               // index
   "/vault/app.js",               // скрипт
   "/vault/data/users.json",      // данные пользователей
   // PWA иконки
@@ -51,6 +51,7 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
 
 
 
