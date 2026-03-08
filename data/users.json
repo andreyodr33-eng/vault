@@ -18,7 +18,7 @@
     "bank": "Revolut",
     "qr": "icons/ivanov-qr.png",
     "color": "#FFD700",
-    "textColor": "222222"
+    "textColor": "black"
  },
   "petrov": {
     "name": "Петр Петров",
