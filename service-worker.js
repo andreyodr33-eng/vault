@@ -1,6 +1,6 @@
 const CACHE_NAME = "cards-v1";
 const FILES_TO_CACHE = [
-                     // главная страница
+  "/vault/",                    // главная страница
   "/vault/index.html",           // index
   "/vault/app.js",               // скрипт
   "/vault/data/users.json",      // данные пользователей
@@ -51,6 +51,7 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
 
 
 
