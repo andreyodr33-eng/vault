@@ -175,12 +175,12 @@ fetch("/vault/data/users.json")
     phoneLink.textContent = "📞 " + user.phone;
     phoneLink.href = "tel:" + user.phone;
 
-    document.querySelector(".flip-card-front").style.background = user.color || "#222";
+    document.querySelector(".flip-card-front").style.backgroundColor = user.color || "#222";
 
 
     // ===== Обратная сторона =====
     document.getElementById("back-bank").textContent = user.bank;
-    document.querySelector(".flip-card-back").style.background = user.color || "#222";
+    document.querySelector(".flip-card-back").style.backgroundColor = user.color || "#222";
 
     // ===== QR код =====
     const qrImg = document.getElementById("qr-code"); 
@@ -234,6 +234,7 @@ function shareCard() {
 </script>
 </body>
 </html>
+
 
 
 
