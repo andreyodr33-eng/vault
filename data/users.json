@@ -17,8 +17,8 @@
     "phone": "+353874919018",
     "bank": "Revolut",
     "qr": "icons/ivanov-qr.png",
-    "color": "#222222",
-    "textColor": "ffffff"
+    "color": "#FFD700",
+    "textColor": "222222"
  },
   "petrov": {
     "name": "Петр Петров",
