@@ -6,7 +6,8 @@
     "phone": "+353 87 491 9018",
     "bank": "Revolut",
      "qr": "icons/andrew-qr.png", 
-     "color": "#222222"
+     "color": "#222222",
+     "textColor: "#fff"
   },
 
   "ivanov": {
@@ -26,7 +27,8 @@
     "phone": "+380111111111",
     "bank": "Ощадбанк",
     "qr": "icons/petrov-qr.png",
-    "color": "#FFFFF0"
+    "color": "#FFFFF0",
+    "textColor": "#222222"
     
   }
 }
