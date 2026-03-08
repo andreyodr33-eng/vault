@@ -26,7 +26,7 @@
     "phone": "+380111111111",
     "bank": "Ощадбанк",
     "qr": "icons/petrov-qr.png",
-    "color": "#FFFFF0",
-    "textColor: "222222"
+    "color": "#FFFFF0"
+    
   }
 }
