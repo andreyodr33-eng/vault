@@ -25,8 +25,7 @@
     "company": "TechCorp",
     "phone": "+380111111111",
     "bank": "Ощадбанк",
-    
     "qr": "icons/petrov-qr.png",
-    "color": "#444444"
+    "color": "#FFFFF0"
   }
 }
