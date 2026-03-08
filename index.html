@@ -181,6 +181,27 @@ fetch("/vault/data/users.json")
     // ===== Обратная сторона =====
     document.getElementById("back-bank").textContent = user.bank;
     document.querySelector(".flip-card-back").style.backgroundColor = user.color || "#222";
+  
+   // ===== TEXT COLOR =====
+const textColor = user.textColor || "#fff";
+
+const textIds = [
+  "front-name",
+  "front-position",
+  "front-company",
+  "front-phone",
+  "back-bank"
+];
+
+textIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.style.color = textColor;
+});
+
+// ссылки (телефон)
+document.querySelectorAll(".flip-card a").forEach(a => {
+  a.style.color = textColor;
+});
 
     // ===== QR код =====
     const qrImg = document.getElementById("qr-code"); 
@@ -234,6 +255,7 @@ function shareCard() {
 </script>
 </body>
 </html>
+
 
 
 
