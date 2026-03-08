@@ -8,9 +8,9 @@ const FILES_TO_CACHE = [
   "/vault/icons/icon-192.png",
   "/vault/icons/icon-512.png",
   // QR-коды пользователей
-  "/vault/icons/andrew-qr.png"
-  
-  
+  "/vault/icons/andrew-qr.png",
+  "/vault/icons/ivanov-qr.png",
+  "/vault/icons/petrov-qr.png"
 ];
 
 // Установка Service Worker и кэширование
@@ -49,4 +49,5 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
 
