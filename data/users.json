@@ -11,11 +11,11 @@
   },
 
   "ivanov": {
-    "name": "Иван Иванов",
-    "position": "Loadmaster",
-    "company": "GUINNESS",
-    "phone": "+353874919018",
-    "bank": "Revolut",
+    "name": "Natalia",
+    "position": "Corporate banking specialist",
+    "company": "Oschadbanc",
+    "phone": "+380501335757",
+    "bank": "Oschad",
     "qr": "icons/ivanov-qr.png",
     "color": "#FFD700",
     "textColor": "black"
