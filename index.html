@@ -141,7 +141,7 @@ a {
     <!-- Задняя сторона -->
     <div class="flip-card-back">
       <h3 id="back-bank">bank</h3>
-      <a href="https://andreyodr33-eng.github.io/web-desing-ireland/" target="_blank">
+      <a id="qr-link" target="_blank">
       <img src="" alt="QR Code" class="qr-code" id="qr-code">
       </a>
       <p><a href="javascript:void(0)" onclick="shareCard()">📤 share</a></p>
@@ -184,7 +184,7 @@ fetch("/vault/data/users.json")
     // ===== Обратная сторона =====
     document.getElementById("back-bank").textContent = user.bank;
     document.querySelector(".flip-card-back").style.backgroundColor = user.color || "#222";
-  
+    document.getElementById("qr-link").href = user.link;
    // ===== TEXT COLOR =====
 const textColor = user.textColor || "#fff";
 
