@@ -5,7 +5,8 @@
     "company": "Kommersant Company",
     "phone": "+380 95 215 3191",
     "bank": "Revolut",
-     "qr": "icons/andrew-qr.png", 
+     "qr": "icons/andrew-qr.png",
+    "link": "revolut://",
      "color": "#222222",
      "textColor": "ffffff"
   },
@@ -17,6 +18,7 @@
     "phone": "+380501335757",
     "bank": "Oschad",
     "qr": "icons/ivanov-qr.png",
+    "link": "https://online.oschadbank.ua/",
     "color": "#FFD700",
     "textColor": "black"
  },
@@ -27,6 +29,7 @@
     "phone": "+380111111111",
     "bank": "Ощадбанк",
     "qr": "icons/petrov-qr.png",
+    "link": "https://online.oschadbank.ua/",
     "color": "#FFFFF0",
     "textColor": "#222222"
     
