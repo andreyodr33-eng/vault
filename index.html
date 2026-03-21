@@ -256,6 +256,43 @@ function shareCard() {
   }
 }
 </script>
+  <script>
+const params = new URLSearchParams(window.location.search);
+const user = params.get("user") || "andrew";
+
+const manifest = {
+  id: "/vault/?user=" + user,
+  name: "CardVault",
+  short_name: "Card",
+  start_url: "/vault/?user=" + user,
+  display: "standalone",
+  background_color: "#ffffff",
+  theme_color: "#222222",
+  icons: [
+    {
+      src: "/vault/icons/icon-192.png",
+      sizes: "192x192",
+      type: "image/png"
+    },
+    {
+      src: "/vault/icons/icon-512.png",
+      sizes: "512x512",
+      type: "image/png"
+    }
+  ]
+};
+
+const blob = new Blob(
+  [JSON.stringify(manifest)],
+  { type: "application/json" }
+);
+
+const manifestURL = URL.createObjectURL(blob);
+
+document
+  .getElementById("manifest-link")
+  .setAttribute("href", manifestURL);
+</script>
 </body>
 </html>
 
