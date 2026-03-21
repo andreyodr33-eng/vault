@@ -164,8 +164,6 @@ if (userKey) {
   userKey = localStorage.getItem("card_user") || "andrew";
 }
 
-userKey = userKey.trim().replace(/\/$/, "").toLowerCase();
-
 console.log("USER KEY:", userKey);
 
 fetch("/vault/data/users.json")
