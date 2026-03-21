@@ -150,7 +150,23 @@ a {
 </div>
 
 <script>
+let params = new URLSearchParams(location.search);
 
+let userKey = params.get("user");
+
+if (userKey) {
+
+  localStorage.setItem("card_user", userKey);
+
+} else {
+
+  const savedUser = localStorage.getItem("card_user");
+
+  if (savedUser) {
+    location.replace("/vault/?user=" + savedUser);
+  }
+
+}
 
 document.addEventListener("DOMContentLoaded", function() {
 
