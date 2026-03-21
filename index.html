@@ -154,8 +154,18 @@ a {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-let userKey = new URLSearchParams(window.location.search).get("user") || "andrew";
+let params = new URLSearchParams(location.search);
+
+let userKey = params.get("user");
+
+if (userKey) {
+  localStorage.setItem("card_user", userKey);
+} else {
+  userKey = localStorage.getItem("card_user") || "andrew";
+}
+
 userKey = userKey.trim().replace(/\/$/, "").toLowerCase();
+
 console.log("USER KEY:", userKey);
 
 fetch("/vault/data/users.json")
