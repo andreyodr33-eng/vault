@@ -1,7 +1,8 @@
 {
-  "id":"/vault/index.html",
+  "id":"/andrew/index.html",
+  "start_url": "/andrew/",
   "name": "CardVault",
-  "short_name": "CVault",
+  "short_name": "Andrew",
   "start_url": "/vault/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
