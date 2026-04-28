@@ -255,7 +255,66 @@ function shareCard() {
   }
 }
 </script>
-  
+<script>
+const users = [
+ "ivanov",
+ "petrov",
+ "andrew"
+ // сюда добавляешь всех пользователей
+];
+
+const params = new URLSearchParams(window.location.search);
+const currentUser = params.get("user");
+
+let currentIndex = users.indexOf(currentUser);
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener("touchstart", function(e){
+   touchStartX = e.changedTouches[0].screenX;
+}, false);
+
+document.addEventListener("touchend", function(e){
+   touchEndX = e.changedTouches[0].screenX;
+   handleSwipe();
+}, false);
+
+
+function handleSwipe(){
+
+ const diff = touchStartX - touchEndX;
+
+ // свайп влево → следующий
+ if(diff > 70){
+    goNext();
+ }
+
+ // свайп вправо → предыдущий
+ if(diff < -70){
+    goPrev();
+ }
+
+}
+
+function goNext(){
+
+ if(currentIndex < users.length-1){
+   window.location.href =
+   "?user=" + users[currentIndex+1];
+ }
+
+}
+
+function goPrev(){
+
+ if(currentIndex > 0){
+   window.location.href =
+   "?user=" + users[currentIndex-1];
+ }
+
+}
+</script>  
 </body>
 </html>
 
