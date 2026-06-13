@@ -23,11 +23,11 @@
     "textColor": "black"
  },
   "petrov": {
-    "name": "Петр Петров",
-    "position": "Developer",
-    "company": "TechCorp",
-    "phone": "+380111111111",
-    "bank": "Ощадбанк",
+    "name": "My Son",
+    "position": "GUINNESS",
+    "company": "Company STL",
+    "phone": "+353874919018",
+    "bank": "Revolut",
     "qr": "icons/petrov-qr.png",
     "link": "https://online.oschadbank.ua/",
     "color": "#FFFFF0",
