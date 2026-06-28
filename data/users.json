@@ -1,8 +1,8 @@
 {
   "andrew": {
-    "name": "ANDRII",
-    "position": "web developer",
-    "company": "Kommersant Company",
+    "name": "ANDRII OBUKHOV",
+    "position": "monobank",
+    "company": "4441 1144 0787 6992",
     "phone": "+380 95 215 3191",
     "bank": "Revolut",
      "qr": "icons/andrew-qr.jpg",
@@ -24,8 +24,8 @@
  },
   "petrov": {
     "name": "My Son",
-    "position": "GUINNESS",
-    "company": "Company STL",
+    "position": "monobank",
+    "company": "5375 4114 2307 6053",
     "phone": "+353874893815",
     "bank": "Revolut",
     "qr": "icons/IMG_E1029.JPG",
