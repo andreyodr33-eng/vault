@@ -10,6 +10,17 @@
      "color": "#222222",
      "textColor": "ffffff"
   },
+   "vanya": {
+    "name": "IVAN OBUKHOV",
+    "position": "monobank",
+    "company": "4441 1144 0787 6992",
+    "phone": "+380 95 153 7638",
+    "bank": "Revolut",
+     "qr": "icons/andrew-qr.jpg",
+    "link": "https://andreyodr33-eng.github.io/developer/?data=4441 1144 0787 6992&seller=3",
+     "color": "#222222",
+     "textColor": "ffffff"
+  },
 
   "wife": {
     "name": "The Wife",
