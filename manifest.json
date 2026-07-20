@@ -5,7 +5,7 @@
   "start_url": "/vault/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#222222",
+  "theme_color": "#f5f5f5",
   "icons": [
     {
       "src": "/vault/icons/icon-32.png",
