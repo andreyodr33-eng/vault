@@ -265,7 +265,7 @@ const users = [
 ];
 
 const params = new URLSearchParams(window.location.search);
-const currentUser = params.get("user");
+const currentUser = (params.get("user") || "andrew").toLowerCase();
 
 let currentIndex = users.indexOf(currentUser);
 
