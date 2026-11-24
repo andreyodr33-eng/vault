@@ -11,7 +11,9 @@ const FILES_TO_CACHE = [
 
 "./icons/IMG_E1029.JPG",
 "./icons/andrew-qr.jpg",
-"./icons/natasha-qr.png"
+"./icons/andrew-qr.png,  
+"./icons/natasha-qr.png",
+  
 ];
 // Установка 
 self.addEventListener("install", event => {
