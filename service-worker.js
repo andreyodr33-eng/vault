@@ -1,4 +1,4 @@
-const CACHE_NAME = "vault-v4";
+const CACHE_NAME = "vault-v5";
 
 // Основные файлы приложения
 const APP_FILES = [
