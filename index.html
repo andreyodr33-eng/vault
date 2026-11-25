@@ -200,13 +200,13 @@ textIds.forEach(id => {
   if (el) el.style.color = textColor;
 });
 
-// ссылки (телефон)
+// Ссылки
 document.querySelectorAll(".flip-card a").forEach(a => {
   a.style.color = textColor;
 });
 
-    // ===== QR код =====
-    
+// ===== QR код =====
+
 const qrImg = document.getElementById("qr-code");
 
 if (user.qr && user.qr.trim() !== "") {
@@ -217,33 +217,40 @@ if (user.qr && user.qr.trim() !== "") {
     qrImg.src = user.qr;
   }
 
-  qrImg.style.display = "block";
-
 } else {
 
   qrImg.src = "/vault/icons/qr-placeholder.png";
-  qrImg.style.display = "block";
 
 }
+
+qrImg.style.display = "block";
+
+  }) // Закрываем then()
+  .catch(err => console.error("Failed to load users.json:", err));
+
+}); // Закрываем DOMContentLoaded
 </script>
-    
+
 <script>
 // Service Worker
 if ("serviceWorker" in navigator) {
-window.addEventListener("load", async () => {
-try {
-const registration =
-await navigator.serviceWorker.register(
-"/vault/service-worker.js"
-);
+  window.addEventListener("load", async () => {
+    try {
+      const registration =
+        await navigator.serviceWorker.register(
+          "/vault/service-worker.js"
+        );
 
-  console.log("Service Worker:", registration.scope);
+      console.log("Service Worker:", registration.scope);
 
-} catch (err) {
-  console.error("SW error:", err);
+    } catch (err) {
+      console.error("SW error:", err);
+    }
+  });
 }
-});
-}
+</script>
+
+  
 </script>
  <script>
 document.addEventListener("DOMContentLoaded", function() {
