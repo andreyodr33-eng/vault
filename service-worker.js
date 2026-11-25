@@ -81,48 +81,36 @@ event.respondWith((async () => {
 
 const cache = await caches.open(CACHE_NAME);
 
-// Проверяем наличие файла в кэше
-const saved = await cache.match(request);
+// Для навигации игнорируем ?user=...
+const saved = await cache.match(
+  request,
+  { ignoreSearch: request.mode === "navigate" }
+);
 
-if (saved) {
-  return saved;
-}
+if (saved) return saved;
 
-// Если файл отсутствует в кэше,
-// загружаем его из интернета
 try {
-
   const response = await fetch(request);
 
-  // Сохраняем успешный ответ
   if (response.ok || response.type === "opaque") {
-
-    try {
-      await cache.put(request, response.clone());
-    } catch (error) {
-      console.warn("Не удалось сохранить:", request.url, error);
-    }
-
+    await cache.put(request, response.clone());
   }
 
   return response;
 
 } catch (error) {
 
-  // Если нет интернета,
-  // возвращаем сохранённую главную страницу
   if (request.mode === "navigate") {
 
-    const index = await cache.match("./index.html");
+    const index = await cache.match(
+      new URL("./index.html", self.registration.scope).href
+    );
 
     if (index) return index;
-
   }
 
-  // Остальные недоступные файлы
   return new Response("", {
-    status: 503,
-    statusText: "Файл недоступен офлайн"
+    status: 503
   });
 
 }
