@@ -206,19 +206,25 @@ document.querySelectorAll(".flip-card a").forEach(a => {
 });
 
     // ===== QR код =====
-    const qrImg = document.getElementById("qr-code"); 
-    qrImg.src = user.qr.startsWith("icons/") ? "/vault/" + user.qr : user.qr;
-    if (user.qr && user.qr.trim() !== "") {
-      qrImg.src = user.qr;
-      qrImg.style.display = "block";
-    } else {
-      qrImg.src = "icons/qr-placeholder.png"; // если нет QR
-      qrImg.style.display = "block";
-    }
-  })
-  .catch(err => console.error("Failed to load users.json:", err));
+    
+const qrImg = document.getElementById("qr-code");
 
-});
+if (user.qr && user.qr.trim() !== "") {
+
+  if (user.qr.startsWith("icons/")) {
+    qrImg.src = "/vault/" + user.qr;
+  } else {
+    qrImg.src = user.qr;
+  }
+
+  qrImg.style.display = "block";
+
+} else {
+
+  qrImg.src = "/vault/icons/qr-placeholder.png";
+  qrImg.style.display = "block";
+
+}
 </script>
     
 <script>
